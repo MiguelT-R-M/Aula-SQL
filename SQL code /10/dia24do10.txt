@@ -1,0 +1,30 @@
+create database clinica2mc;
+use clinica2mc;
+
+
+create table medico(
+
+CRM char(5) not null,
+nome varchar(100) not null,
+especialidade varchar(50) not null,
+primary key(CRM)
+
+);
+create table paciente(
+
+ID int unsigned not null auto_increment,
+nome varchar(100) not null,
+nasc date not null,
+CRM char(5) not null,
+primary key(ID),
+foreign key(CRM) references medico(CRM)
+
+);
+
+insert into medico(CRM, nome, especialidade) values ("13579", "Luan Pedro", "neurologista");
+insert into paciente(id, nome, nasc, CRM) values(default, "Martin Licis", "1999-12-09", "13579");
+update paciente set CRM = "67890" where ID = "2";
+select * from paciente;
+
+select id, nome, nasc, (curdate() - nasc) from paciente
+

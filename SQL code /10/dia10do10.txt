@@ -1,0 +1,41 @@
+create database ESCOLA;
+use ESCOLA;
+
+-- Tabela
+create table ALUNO(
+
+MATRICULA char(5),
+NOME varchar(80),
+NASC date,
+primary key(MATRICULA)
+
+);
+
+insert into ALUNO(MATRICULA, NOME, NASC) values ("00001", "Jaum da Silva", "1990-08-20");
+insert into ALUNO(MATRICULA, NOME, NASC) values ("00002", "Miguel Henrique", "2006-03-09");
+insert into ALUNO(MATRICULA, NOME, NASC) values ("00003", "Eliáses da silva", "2003-05-06");
+insert into ALUNO(MATRICULA, NOME, NASC) values ("00004", "Jonas Henrique", "2001-09-12");
+
+select * from ALUNO;
+select * from ALUNO limit 2;	
+
+create table NOTA(
+
+ID	int unsigned not null auto_increment,
+DISCIPLINA varchar(20) not null,
+AV1 float(4,2),
+AV2 float(4,2),
+MATRICULA char(5),
+primary key(ID),
+foreign key(MATRICULA) references ALUNO(MATRICULA)
+
+);
+
+
+describe NOTA;
+insert into NOTA(ID, DISCIPLINA, AV1, AV2, MATRICULA) values (default, "banco de dados", 7.5, 5.5, "00001");
+
+select * from NOTA;
+
+select DISCIPLINA, AV1, AV2, MATRICULA, (AV1 + AV2)/2 as MEDIA from NOTA;
+
