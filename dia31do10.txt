@@ -1,0 +1,31 @@
+use clinica2mc;
+
+
+create table medico(
+
+CRM char(5) not null,
+nome varchar(100) not null,
+especialidade varchar(50) not null,
+primary key(CRM)
+);
+
+create table paciente(
+
+	ID int unsigned not null auto_increment,
+    nome varchar(100) not null,
+    nasc date not null,
+    CRM char(5) not null,
+    primary key(ID),
+    foreign key(CRM) references medico(CRM)
+		
+    );
+    
+			
+insert into medico(CRM, nome, especialidade) values ('00005', 'E', 'Y');
+insert into paciente(ID, nome, nasc, CRM) values (default, 'A2', '2000-04-02', '00001'), (default, 'B2', '2003-05-06', '00002'), (default, 'C2', '2003-04-02', '00003'), (default, 'D2', '2006-03-09', '00004');
+
+select paciente.nome, paciente.nasc, year(now()) - year(paciente.nasc) as idade, medico.nome, medico.CRM, medico.especialidade from medico inner join paciente on medico.CRM = paciente.CRM where year(now()) - year(paciente.nasc)>=18 order by paciente.ID DESC; 
+
+select * from paciente where paciente.nome like '%A%';
+
+select paciente.nome, medico.nome, year(now()) - year(paciente.nasc) as idade from medico inner join paciente on medico.CRM = paciente.CRM where year(now()) - year(paciente.nasc) between 20 and 50;
