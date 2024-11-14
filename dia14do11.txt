@@ -1,0 +1,52 @@
+create database Livraria;
+use Livraria;
+
+create table Clientes(
+
+	id_cliente int unsigned not null auto_increment,
+	nome varchar(100) not null,
+	email varchar(50), 
+	primary key(id_cliente)
+
+);
+
+create table Livros(
+
+	id_livro int unsigned not null auto_increment,
+    titulo varchar(40) not null,
+    autor varchar(40) not null,
+    preco double not null,
+    categoria varchar(40),
+    primary key(id_livro)
+
+);
+
+create table Pedidos(
+
+	id_pedido int unsigned not null auto_increment,
+	id_cliente int unsigned not null,
+    id_livro int unsigned not null,
+    quantidade int unsigned not null,
+    data_pedido date,
+    primary key(id_pedido),
+    foreign key(id_cliente) references Clientes(id_cliente),
+    foreign key(id_livro) references Livros(id_livro)
+
+);
+
+insert into Clientes(id_cliente, nome, email) values (default, "E", "E@hotmail.com");
+
+insert into Livros(id_livro, titulo, autor, preco, categoria) values (default, "EF", "EG", 80.0, "EH");
+
+insert into Pedidos(id_pedido, id_cliente, id_livro, quantidade, data_pedido) values (default, 5, 5, 12, "2024-11-14");
+
+select Clientes.nome as nomecliente, Livros.titulo as titulolivro, Pedidos.quantidade, Livros.preco as precolivro, (Pedidos.quantidade)*Livros.preco as valor from pedidos
+	inner join Livros on Pedidos.id_livro=Livros.id_livro 
+	inner join Clientes on Pedidos.id_cliente=Clientes.id_cliente;
+
+select * from pedidos;
+
+update Pedidos
+set data_pedido="2032-03-22"
+where id_pedido=5;
+
