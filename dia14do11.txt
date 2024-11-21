@@ -34,19 +34,24 @@ create table Pedidos(
 
 );
 
-insert into Clientes(id_cliente, nome, email) values (default, "E", "E@hotmail.com");
+insert into Clientes(id_cliente, nome, email) values (default, "A", "A@hotmail.com"), (default, "B", "B@hotmail.com"), (default, "C", "C@hotmail.com"), (default, "D", "D@hotmail.com"), (default, "E", "E@hotmail.com");
 
-insert into Livros(id_livro, titulo, autor, preco, categoria) values (default, "EF", "EG", 80.0, "EH");
+insert into Livros(id_livro, titulo, autor, preco, categoria) values (default, "AB", "AC", 80.0, "AD"), (default, "BC", "BD", 80.0, "BE"), (default, "CD", "CE", 80.0, "CF"), (default, "DE", "DF", 80.0, "DG"), (default, "EF", "EG", 80.0, "EH");
 
-insert into Pedidos(id_pedido, id_cliente, id_livro, quantidade, data_pedido) values (default, 5, 5, 12, "2024-11-14");
-
-select Clientes.nome as nomecliente, Livros.titulo as titulolivro, Pedidos.quantidade, Livros.preco as precolivro, (Pedidos.quantidade)*Livros.preco as valor from pedidos
-	inner join Livros on Pedidos.id_livro=Livros.id_livro 
-	inner join Clientes on Pedidos.id_cliente=Clientes.id_cliente;
+insert into Pedidos(id_pedido, id_cliente, id_livro, quantidade, data_pedido) values (default, 1, 1, 10, "2029-11-14"), (default, 1, 2, 1, "2049-11-14"), (default, 2, 3, 23, "2009-11-14"), (default, 3, 4, 10, "2129-11-14"), (default, 4, 5, 10, "2029-11-14"), (default, 5, 1, 1, "2089-11-14"), (default, 2, 1, 10, "2029-11-14"), (default, 4, 4, 20, "2065-11-14"), (default, 3, 2, 20, "2075-11-14"), (default, 5, 5, 1, "2047-11-14");
 
 select * from pedidos;
 
-update Pedidos
-set data_pedido="2032-03-22"
-where id_pedido=5;
+update Livros
+set preco=preco*1.2
+where titulo="AB";
 
+delete from Pedidos
+where id_pedido=21;
+
+select titulo, preco, round((preco*1.2),2) as novopreco from Livros;
+
+select Pedidos.id_pedido, Clientes.nome, concat("R$", Livros.preco) as preco, Pedidos.quantidade as quant, concat("R$", round((Livros.preco*Pedidos.quantidade),2)) as total from Pedidos
+    inner join Clientes on Pedidos.id_cliente=Clientes.id_cliente
+    inner join Livros on Pedidos.id_livro=Livros.id_livro order by Clientes.nome;
+    
